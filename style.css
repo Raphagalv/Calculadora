@@ -1,0 +1,83 @@
+:root {
+    --bg-color: #ffffff;
+    --btn-numero: #38363631;
+    --btn-operador: #9e9e9e;
+    --btn-clear: #fd8a3d;
+    --font-numero: #fff;
+    --font-operador: #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+}
+
+#calculadora {
+    width: 320px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+
+#visor {
+    background-color: #1c1c1e;
+    padding: 24px;
+    text-align: right;
+}
+
+#conta {
+    color: #888;
+    font-size: 18px;
+    min-height: 24px;
+}
+
+#resultado {
+    color: #ffffff;
+    font-size: 48px;
+    font-weight: 300;
+}
+
+#teclado {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background-color: #e0e0e0;
+}
+
+button {
+    padding: 20px;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    background-color: var(--btn-numero);
+    color: var(--font-operador);
+    transition: opacity 0.1s;
+}
+
+button:active {
+    opacity: 0.6;
+}
+
+#clear {
+    background-color: var(--btn-clear);
+    color: var(--font-clear);
+}
+
+#equals {
+    background-color: var(--btn-operador);
+    grid-row: span 2;
+}
+
+#zero {
+    grid-column: span 3;
+}
+

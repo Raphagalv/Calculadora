@@ -55,7 +55,14 @@ buttons.forEach(function (botao) {
                 calculo = num1 / num2
             }
             conta.textContent = num1 + ' ' + op + ' ' + num2 + ' ='
-            resultado.textContent = calculo
+
+            if (calculo > 999999999 || calculo < -999999999) {
+                resultado.textContent = calculo.toExponential(2)
+            } else {
+                resultado.textContent = parseFloat(calculo.toFixed(10))
+            }
+
+            
             numeroAtual = ''
             numeroAnterior = ''
             operacao = ''

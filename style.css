@@ -44,6 +44,7 @@ body {
     color: #ffffff;
     font-size: 48px;
     font-weight: 300;
+    min-height: 58px;
 }
 
 #teclado {

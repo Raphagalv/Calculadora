@@ -1,45 +1,80 @@
-
 const conta = document.getElementById('conta');
 const resultado = document.getElementById('resultado');
-
 const buttons = document.querySelectorAll('#teclado button');
+
+let numeroAtual = ''
+let numeroAnterior = ''
+let operacao = ''
+let ultimoNumero = ''
+let ultimaOperacao = ''
+let resultadoCalculado = false
 
 buttons.forEach(function (botao) {
     botao.addEventListener('click', function () {
         const valor = botao.textContent;
 
         if (botao.id === 'clear') {
-            // limpa tudo
             numeroAtual = ''
             numeroAnterior = ''
             operacao = ''
+            ultimoNumero = ''
+            ultimaOperacao = ''
+            resultadoCalculado = false
             conta.textContent = ''
             resultado.textContent = ''
+
         } else if (botao.id === 'equals') {
-            // lógica calculos
-            if (numeroAnterior === '' || numeroAtual === '')
-                return
+            if (numeroAnterior === '' && ultimoNumero === '') return
 
-            const num1 = parseFloat(numeroAnterior)
-            const num2 = parseFloat(numeroAtual)
+            let num1, num2, op
+
+            if (numeroAnterior !== '') {
+                num1 = parseFloat(numeroAnterior.replace(',', '.'))
+                num2 = parseFloat(numeroAtual.replace(',', '.'))
+                op = operacao
+                ultimoNumero = numeroAtual
+                ultimaOperacao = operacao
+            } else {
+                num1 = parseFloat(resultado.textContent.replace(',', '.'))
+                num2 = parseFloat(ultimoNumero.replace(',', '.'))
+                op = ultimaOperacao
+            }
+
             let calculo = 0
-
-            if (operacao === '+') calculo = num1 + num2
-            if (operacao === '-') calculo = num1 - num2
-            if (operacao === '*') calculo = num1 * num2
-            if (operacao === '/') calculo = num1 / num2
-
-            conta.textContent = numeroAnterior + ' ' + operacao + ' ' + numeroAtual + ' ='
+            if (op === '+') calculo = num1 + num2
+            if (op === '-') calculo = num1 - num2
+            if (op === '*') calculo = num1 * num2
+            if (op === '/') {
+                if (num2 === 0) {
+                    resultado.textContent = 'Erro'
+                    numeroAtual = ''
+                    numeroAnterior = ''
+                    operacao = ''
+                    return
+                }
+                calculo = num1 / num2
+            }
+            conta.textContent = num1 + ' ' + op + ' ' + num2 + ' ='
             resultado.textContent = calculo
-            numeroAtual = String(calculo)
+            numeroAtual = ''
             numeroAnterior = ''
             operacao = ''
+            resultadoCalculado = true
+
         } else if (['+', '-', '*', '/'].includes(valor)) {
-            // guarda a operação e sobe numero
-            if (numeroAtual === '' && numeroAnterior === '') return
+            if (numeroAtual === '' && numeroAnterior === '' && !resultadoCalculado) return
+
+            if (resultadoCalculado) {
+                numeroAnterior = resultado.textContent
+                numeroAtual = ''
+                resultadoCalculado = false
+                operacao = valor
+                conta.textContent = numeroAnterior + ' ' + operacao
+                return
+            }
 
             if (numeroAtual === '' && operacao !== '') {
-                operacao = valor 
+                operacao = valor
                 conta.textContent = numeroAnterior + ' ' + operacao
                 return
             }
@@ -49,8 +84,13 @@ buttons.forEach(function (botao) {
             numeroAtual = ''
             conta.textContent = numeroAnterior + ' ' + operacao
             resultado.textContent = ''
+
         } else {
-            // Se é numero adiciona no visor
+
+            if (resultadoCalculado) {
+                numeroAtual = ''
+                resultadoCalculado = false
+            }
 
             if (valor === ',' && numeroAtual === '') {
                 numeroAtual = '0,'
@@ -63,8 +103,3 @@ buttons.forEach(function (botao) {
         }
     })
 })
-
-
-let numeroAtual = ''
-let numeroAnterior = ''
-let operacao = ''

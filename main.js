@@ -44,6 +44,8 @@ buttons.forEach(function (botao) {
             }
 
             let calculo = 0
+
+            // Operadores
             if (op === '+') calculo = num1 + num2
             if (op === '-') calculo = num1 - num2
             if (op === '*') calculo = num1 * num2
@@ -59,6 +61,7 @@ buttons.forEach(function (botao) {
             }
             conta.textContent = num1 + ' ' + op + ' ' + num2 + ' ='
 
+            // Limite caracteres
             if (calculo > 999999999 || calculo < -999999999) {
                 resultado.textContent = calculo.toExponential(2)
             } else {

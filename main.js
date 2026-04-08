@@ -13,6 +13,7 @@ buttons.forEach(function (botao) {
     botao.addEventListener('click', function () {
         const valor = botao.textContent;
 
+        // Limpa o visor ao clicar no C
         if (botao.id === 'clear') {
             numeroAtual = ''
             numeroAnterior = ''
@@ -24,6 +25,8 @@ buttons.forEach(function (botao) {
             resultado.textContent = ''
 
         } else if (botao.id === 'equals') {
+
+            // Evita calcular se não houver números
             if (numeroAnterior === '' && ultimoNumero === '') return
 
             let num1, num2, op
@@ -62,7 +65,7 @@ buttons.forEach(function (botao) {
                 resultado.textContent = parseFloat(calculo.toFixed(10))
             }
 
-            
+
             numeroAtual = ''
             numeroAnterior = ''
             operacao = ''
